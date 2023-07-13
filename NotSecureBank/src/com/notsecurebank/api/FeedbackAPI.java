@@ -17,6 +17,7 @@ import org.apache.wink.json4j.JSONObject;
 import com.notsecurebank.model.Feedback;
 import com.notsecurebank.util.OperationsUtil;
 import com.notsecurebank.util.ServletUtil;
+import org.owasp.encoder.Encode;
 
 @Path("/feedback")
 public class FeedbackAPI extends NotSecureBankAPI {
@@ -45,10 +46,10 @@ public class FeedbackAPI extends NotSecureBankAPI {
         String comments;
 
         try {
-            name = (String) myJson.get("name");
-            email = (String) myJson.get("email");
-            subject = (String) myJson.get("subject");
-            comments = (String) myJson.get("message");
+            name = Encode.forHtml((String) myJson.get("name"));
+            email = Encode.forHtml((String) myJson.get("email"));
+            subject = Encode.forHtml((String) myJson.get("subject"));
+            comments = Encode.forHtml((String) myJson.get("message"));
         } catch (JSONException e) {
             LOG.error(e.toString());
             return Response.status(400).entity("{\"Error\": \"Body does not contain all the correct attributes\"}").build();
@@ -57,7 +58,7 @@ public class FeedbackAPI extends NotSecureBankAPI {
         String feedbackId = OperationsUtil.sendFeedback(name, email, subject, comments);
 
         if (feedbackId != null) {
-            response = "{\"status\":\"Thank you!\",\"feedbackId\":\"" + feedbackId + "\"}";
+            response = "{\"status\":\"Thank you!\",\"feedbackId\":\"" + Encode.forJavaScript(feedbackId) + "\"}";
             try {
                 myJson = new JSONObject(response);
                 return Response.status(200).entity(myJson.toString()).build();
@@ -67,10 +68,10 @@ public class FeedbackAPI extends NotSecureBankAPI {
             }
         } else {
             myJson = new JSONObject();
-            myJson.put("name", name);
-            myJson.put("email", email);
-            myJson.put("subject", subject);
-            myJson.put("comments", comments);
+            myJson.put("name", Encode.forHtml(name));
+            myJson.put("email", Encode.forHtml(email));
+            myJson.put("subject", Encode.forHtml(subject));
+            myJson.put("comments", Encode.forHtml(comments));
             return Response.status(200).entity(myJson.toString()).build();
         }
     }
