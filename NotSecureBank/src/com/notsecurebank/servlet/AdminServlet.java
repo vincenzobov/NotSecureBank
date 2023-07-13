@@ -32,7 +32,20 @@ public class AdminServlet extends HttpServlet {
                 LOG.error("Inserted data null or empty for addAccount operation.");
                 message = "An error has occurred. Please try again later.";
             } else {
-                String error = DBUtil.addAccount(username, acctType);
+                String sql = "INSERT INTO accounts (username, acctType) VALUES (?, ?)";
+
+                try (
+                    Connection connection = getConnection();
+                    PreparedStatement statement = connection.prepareStatement(sql)) {
+
+                    statement.setString(1, username);
+                    statement.setString(2, acctType);
+
+                    statement.executeQuery();
+                } catch (SQLException e) {
+                    // Handle any potential exceptions
+                    e.printStackTrace();
+                }
                 if (error != null)
                     message = error;
             }
