@@ -36,6 +36,7 @@ public class AdminAPI extends NotSecureBankAPI {
             return Response.status(400).entity(response).build();
         }
 
+
         // Convert request to JSON
         String username;
         String password1;
@@ -83,6 +84,11 @@ public class AdminAPI extends NotSecureBankAPI {
         if (!ServletUtil.isLoggedin(request)) {
             String response = "{\"loggedIn\" : \"false\"}";
             return Response.status(400).entity(response).build();
+        }
+
+         if (User.isAdmin(request)) {
+            String response = "{\"error\":\"Access denied.  Insufficient privileges.\"}";
+            return Response.status(403).entity(response).build();
         }
 
         String firstname;

@@ -277,4 +277,11 @@ public class ServletUtil {
         request.getSession().setAttribute("specialPrizeCode", specialPrizeCode);
         return specialPrizeCode;
     }
+
+    public static boolean isAdmin(HttpServletRequest request) {
+        User user = (User) request.getSession().getAttribute(ServletUtil.SESSION_ATTR_USER);
+        String userRole = getRole(user);
+        return "admin".equals(userRole);
+
+    }
 }
