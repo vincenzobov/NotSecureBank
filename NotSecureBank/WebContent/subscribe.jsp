@@ -43,12 +43,7 @@
 			  if (sEmail != "") {
 			    var emailFilter=/^[\w\d\.\%-]+@[\w\d\.\%-]+\.\w{2,4}$/;
 			    if (!(emailFilter.test(sEmail))) {
-			      var illegalChars= /[^\w\d\.\%\-@]/;
-			      if (sEmail.match(illegalChars)) {
-			          msg = "Your email can only contain alphanumeric\ncharacters and the following:  @.%-\n\n";
-			      } else {
-			        msg = "Your email address does not appear to be valid. Please try again.\n\n";
-			      }
+			      msg = "Please try again.\n\n";
 			    }
 			  } else {
 			    msg = "Please enter an email address.\n\n";
