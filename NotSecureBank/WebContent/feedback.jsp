@@ -25,32 +25,30 @@
 		
 		<form name="cmt" method="post" action="sendFeedback">
 		
-		<table border=0>
-		  <tr>
-		    <td align=right>To:</td>
-		    <td valign=top><b>Online Banking</b> </td>
-		  </tr>
-		  <tr>
-		    <td align=right>Your Name:</td>
-		    <td valign=top><input name="name" size=25 type=text value = "<%= ((user != null && user.getFirstName() != null)?user.getFirstName()+" ":"") + ((user != null && user.getLastName() != null)?user.getLastName():"") %>"></td>
-		  </tr>
-		  <tr>
-		    <td align=right>Your Email Address:</td>
-		    <td valign=top><input name="email_addr" type=text size=25></td>
-		  </tr>
-		  <tr>
-		    <td align=right>Subject:</td>
-		    <td valign=top><input name="subject" size=25></td>
-		  </tr>
-		  <tr>
-		    <td align=right valign=top>Question/Comment:</td>
-		    <td><textarea cols=65 name="comments" rows=8 wrap=PHYSICAL align="top"></textarea></td>
-		  </tr>
-		  <tr>
-		    <td>&nbsp;</td>
-		    <td><input type=submit value=" Submit " name="submit">&nbsp;<input type=reset value=" Clear Form " name="reset"></td>
-		  </tr>
-		</table>
+			<table border=0>
+			<tr>
+				<td align=right>To:</td>
+				<td valign=top><b>Online Banking</b> </td>
+			</tr>
+
+			<tr>
+				<td align=right>Your Name:</td>
+				<td valign=top><input name="name" size=25 type=text value='<c:out value="${(user != null && user.getFirstName() != null) ? user.getFirstName() : ''}" />'></td>
+			</tr>
+			<tr>
+				<td align="right">Your Email Address:</td>
+				<td valign="top"><input name="email_addr" type="text" size="25" value="${fn:escapeXml(request.getParameter("email_addr"))}" /></td>
+			</tr>
+			<tr>
+				<td align="right">Subject:</td>
+				<td valign="top"><input name="subject" size="25" value="${fn:escapeXml(request.getParameter("subject"))}" /></td>
+			</tr>
+			<tr>
+				<td align="right" valign="top">Question/Comment:</td>
+				<td><textarea cols="65" name="comments" rows="8" wrap="PHYSICAL" align="top">${fn:escapeXml(request.getParameter("comments"))}</textarea></td>
+			</tr>
+
+			</table>
 		</form>
 		
 		<br /><br />
