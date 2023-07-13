@@ -284,4 +284,20 @@ public class ServletUtil {
         return "admin".equals(userRole);
 
     }
+
+    public boolean isValidContent(String content) {
+   
+        String pattern = "^[a-zA-Z0-9_.]+$";
+        
+
+        if (content.matches(pattern)) {
+            if (content.contains("..")) {
+                return false;
+            }
+            
+            return true; 
+        }
+        
+        return false; 
+    }
 }
